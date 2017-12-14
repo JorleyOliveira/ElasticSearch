@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Movies Finder</title>
+
+<div th:replace="fragments/header :: header-css" />
+
+</head>
+<script type="text/javascript">
+function init() {
+	navigator.geolocation.getCurrentPosition(
+			(p) => {
+				document.getElementById("lat").value = p.coords.latitude 
+				document.getElementById("lng").value = p.coords.longitude
+			}, 
+			(err) => {console.log(" ee ",err)}, 
+			{
+		   		enableHighAccuracy : true,
+		   		timeout : 60000,
+		   		maximumAge : 0
+		    })
+}
+</script>
+<body onload="init();">
+	<div th:replace="fragments/header :: header" />
+
+	<div class="container">
+		<h1>Resultados da consulta</h1>
+
+	</div>
+	<!-- /.container -->
+		<div class="row">
+			<div class="col-sm-12">
+					<table class="table">
+						<thead class="thead-dark">
+							<tr>
+								<th scope="col">Title</th>
+								<th scope="col">Overview</th>
+								<th scope="col">Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="movie : ${listaFilmes}">
+								<tr>
+									<td th:text="${movie.title}"></td>
+									<td th:text="${movie.overview}"></td>
+									<td th:text="${movie.releaseDate}"></td>
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+					
+			</div>
+		</div>
+	<div th:replace="fragments/footer :: footer" />
+
+</body>
+</html>
